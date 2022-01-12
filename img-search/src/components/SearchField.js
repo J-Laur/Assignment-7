@@ -1,59 +1,51 @@
-import React, { Component, Fragment, useState } from "react";
+import React, { Fragment, Component, useState, useEffect } from "react";
 import GifCard from "./GifCard";
+import axios from "axios";
 
-class SearchField extends Component {
+function SearchField() {
 
-    state = {
-        searchValue: "",
-        gifs: []
-        };
+    const API_KEY = "vlBltm1oSgXB2gSk1qXFa39jxmt6UXAx"
 
-    handleOnChange = event => {
-        this.setState({ searchValue: event.target.value });
-        };
-    
-    handleSearch = () => {
+    const [gif, setGifs] = useState({});
 
-        this.makeApiCall(this.state.searchValue);
+    const SearchGif = useEffect(() =>
+    {
+        axios.get("http://api.giphy.com/v1/gifs/search?q=" + Search +"E&api_key=" + 
+        API_KEY).then((response) =>
+        {
+            setGifs(response.data);
+            console.log(response.data);
+
+        });},[]);
+
+    const Search = (event) =>{
+
+        event.preventDefault();
+        const body = {gif};
+        event.target.value;
+
     };
 
-    makeApiCall = searchInput => {
-        var searchUrl = `http://api.giphy.com/v1/gifs/trending?api_key=vlBltm1oSgXB2gSk1qXFa39jxmt6UXAx`;
-        fetch(searchUrl)
-        .then(response => {
-        
-            return 
-                response.json();
-        })
-        .then(jsonData => {
-        this.setState({ gifs: jsonData.gifs });
-        console.log(jsonData.gifs);
-        });
-        };
-
-    render() {
-        return (
-            <div>
-            <h1>GIPHY Search</h1>
-            <input className="text" type="text" placeholder="Search GIFs" />
-            <button onClick={this.handleSearch} className="input-group-text btn btn-outline-info btn-sm">Search</button>
+    class Render extends SearchField {
+        render() {
             
-            {this.state.gifs ? (
-            <div>
-                 {this.state.gifs.map((gifs, index) => (
-            <div key={index}>
-                 <h1>{gifs.str}</h1>
-                 <img src={gifs.strThumb} />
-            </div>
-            ))}
-            </div>
-            ) : (
-                 <p>Try searching for a GIF!</p>
-            )}
-            </div>
+             return(
+              <div>
+                <form onSubmit={Search}>
+                  <input
+                  type="text"
+                  value={gif}
+                  onChange={(event) => setGifs(event.target.value)}
+                  ></input>
+                  <button className="input-group-text btn btn-outline-info btn-sm">
+                  SEARCH
+                  </button>
+                 </form>
+              </div>
             );
-    };
-    
-}
+         }
+    }
 
+    <GifCard />
+}
 export default SearchField;
