@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
-import Random from "./Random";
+import GifCard from "./GifCard";
 
-const Trending = () => {
+const SearchField = () => {
 
     const [state, setState] = useState([]);
 
@@ -12,6 +12,7 @@ const Trending = () => {
 
         try{
 
+            const body = {state}
         }
         catch(err){
 
@@ -29,17 +30,17 @@ const Trending = () => {
                 <div className="input-group bg-secondary text-white">
                   <input type="text" 
                   className="form-control" 
-                  placeholder="Enter search terms here" 
-                  aria-label="ZIP field" aria-describedby="basic-addon2"
+                  placeholder="Enter search terms here to see the GIFs trending now!" 
+                  aria-label="Trending field" aria-describedby="basic-addon2"
                   value = {state}
                   onChange = {e => setState(e.target.value)}></input>
                   <span className="input-group-text btn btn-outline-info btn-lg" id="basic-addon2">SEARCH</span>
                 </div>
             </form>
-        <Random />
+        <GifCard />
 
         </Fragment>
     )
 }
 
-export default Trending;
+export default SearchField;
